@@ -7,18 +7,8 @@ body {
 }
 
 header {
-  background: #ffe08a;
   padding: 2rem;
   text-align: center;
-}
-
-section {
-  padding: 2rem;
-  margin: 1rem auto;
-  max-width: 800px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ccc;
 }
 
 footer {
@@ -27,3 +17,46 @@ footer {
   font-size: 0.8rem;
   color: #777;
 }
+
+section {
+    position: relative;
+    z-index: 1;
+  }
+
+  #circle-overlay {
+    position: fixed;
+    top: 0;             /* arriba */
+    left: 100vw;        /* totalmente afuera a la derecha */
+    width: 200vw;
+    height: 200vw;
+    background: #aee9f5;
+    border-radius: 50%;
+    transform-origin: top right;  /* punto de origen para scale y transform */
+    transform: scale(0);
+    z-index: 10;
+    transition: left 1.5s ease-out, transform 1.5s ease-out;
+  }
+  
+  #circle-overlay.enter {
+    top: 0;
+    left: calc(100vw - 100vmax); /* Mover hacia la izquierda para cubrir */
+    transform: scale(1);
+  }
+  
+  #circle-overlay.exit {
+    top: 0;
+    left: calc(100vw - 100vmax);
+    transform: scale(0);
+  }
+  
+  
+  @keyframes circleSwoop {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      clip-path: circle(100% at 50% 50%);
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(0);
+      clip-path: circle(0% at 50% 50%);
+    }
+  }

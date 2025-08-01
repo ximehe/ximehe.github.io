@@ -1,7 +1,45 @@
 @import "transition-style";
 @import "https://unpkg.com/transition-style";
 
-/* Animación personalizada */
+/* =================== FONDOS Y CUERPO =================== */
+
+body {
+  margin: 0;
+  background-color: rgb(31, 116, 212); /* azul oscuro */
+  font-family: system-ui;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* =================== CONTENIDO SIEMPRE VISIBLE =================== */
+
+#contenido {
+position: relative;
+  z-index: 2;
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  padding: 2ch;
+  color: deeppink; /* base rosado */
+  mix-blend-mode: difference;
+  text-align: center;
+}
+
+
+/* =================== CÍRCULO ANIMADO =================== */
+
+#pantalla {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background-color: hsl(200 50% 80%); /* celeste */
+  pointer-events: none;
+  clip-path: var(--circle-top-right-out);
+}
+
+/* =================== ANIMACIONES =================== */
+
 @keyframes in-circle-swoop {
   from {
     clip-path: var(--circle-top-right-out);
@@ -23,28 +61,12 @@
 .transition-on {
   --transition__duration: 2s;
   animation: in-circle-swoop 2s forwards;
-  clip-path: var(--circle-bottom-right-in);
 }
 
 .transition-off {
   animation: out-circle-swoop 2s forwards;
-  clip-path: var(--circle-top-right-out);
 }
 
-
-
-[transition-style="in:custom:circle-swoop"] {
-  --transition__duration: 5s;
-  animation-name: in-circle-swoop;
-}
-
-div {
-  width: 100%;
-  background: hsl(200 50% 80%);
-  padding: 2ch;
-  display: grid;
-  place-content: center;
-}
 
 h1 {
   font-size: 15vmin;
@@ -61,12 +83,12 @@ html {
   inline-size: 100%;
 }
 
-body {
-  min-block-size: 100%;
-  min-inline-size: 100%;
-  margin: 0;
-  box-sizing: border-box;
-  display: flex;
-  text-align: end;
-  font-family: system-ui;
+/* Cuando el círculo se expande, se desplaza el fondo del texto */
+.transition-on + #contenido {
+  background-position: right;
+}
+
+/* Cuando el círculo se retrae, vuelve a la izquierda */
+.transition-off + #contenido {
+  background-position: left;
 }
